@@ -1,6 +1,6 @@
 {
   "name": "kafka-fantasy",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Functional wrapper around kafka-node. Based on fantasyland spec.",
   "main": "index.js",
   "scripts": {
