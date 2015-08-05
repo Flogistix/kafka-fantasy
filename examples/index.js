@@ -69,13 +69,13 @@ const
     closeClientAndProducer = du (T) ( bind (K.closeProducer (producer))
                                     , bind (K.closeClient   (client)) ),
 
-  //createTopicsT :: Task {}
-    createTopicsT = du (T) ( bind (K.producerOnReady (producer, 10000))
-                           , bind (K.createTopics    (producer, ['test', 'blah']))
-                           , bind (K.send            (producer, payload))
-                           , bind (closeClientAndProducer) );
+  //createTopicsAndSendPayload :: Task {}
+    createTopicsAndSendPayload = du (T) ( bind (K.producerOnReady (producer, 10000))
+                                        , bind (K.createTopics    (producer, ['test', 'blah']))
+                                        , bind (K.send            (producer, payload))
+                                        , bind (closeClientAndProducer) );
 
-    return runTask (logI, id, createTopicsT);
+    return runTask (logI, id, createTopicsAndSendPayload);
   }(),
 
   nil = null;
