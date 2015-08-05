@@ -30,7 +30,7 @@
 
     mkProducerRequest :: Topic -> Int -> [String] -> Payload
 
-    send :: Producer -> [ProducerRequest] -> Task {}
+    send :: Producer -> [ProducerRequest] -> Task Unit
 
     mkConsumer :: Client -> [FetchRequest] -> ConsumerOptions -> Consumer
 
