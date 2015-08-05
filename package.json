@@ -1,0 +1,32 @@
+{
+  "name": "kafka-fantasy",
+  "version": "0.0.1",
+  "description": "Functional wrapper around kafka-node. Based on fantasyland spec.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Flogistix/kafka-fantasy.git"
+  },
+  "keywords": [
+    "fantasyland",
+    "functional",
+    "kafka"
+  ],
+  "author": "Trevor Basinger",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Flogistix/kafka-fantasy/issues"
+  },
+  "homepage": "https://github.com/Flogistix/kafka-fantasy#readme",
+  "dependencies": {
+    "baconjs": "^0.7.70",
+    "control.monads": "^0.6.0",
+    "data.task": "^3.0.0",
+    "fantasy-io": "0.0.1",
+    "kafka-node": "^0.2.27",
+    "ramda": "^0.17.1"
+  }
+}
