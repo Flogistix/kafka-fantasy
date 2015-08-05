@@ -33,13 +33,6 @@ const
 //runTask :: (Err b -> IO) -> (a -> IO) -> Task a -> IO a
   runTask = R.curry (function (rej, res, t) { return IO (function () { t.fork (rej, res); }); }),
 
-//taskLiftIO :: IO a -> Task a
-  taskLiftIO = function (io) {
-    return new T (function (reject, resolve) {
-      resolve (io.unsafePerform ());
-    });
-  },
-
 //runStream :: (a -> IO) -> Stream a -> IO
   runStream = R.curry (function (f, stream) {
     return IO (function () {
@@ -48,8 +41,8 @@ const
   }),
 
 //\\//\\ MAIN //\\//\\
-//main :: Task IO
-  main = function (i) {
+//main :: IO
+  main = function () {
     const
 
     vals = [ [2,0,1,1,1,1,2,1,1,1,0,0,0,10367,0,0,995,0,10262,0,847,20,794,0,1344,700,0,0,0,206,196,0,0,53,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
@@ -68,20 +61,22 @@ const
     payload  = [ K.mkProducerRequest ('test', 0, ["9566:" + dataset]) ],
 
   //closeOnSigInt :: Task {}
-    closeOnSigInt = taskLiftIO (handleSIGINT (process, K.closeProducer (producer))),
+    closeOnSigInt = du(T) ( bind  (K.closeProducer (producer))
+                          , chain (R.compose (T.of, handleSIGINT (process))) ),
 
-  //closeClientAndProducer :: IO {}
-    closeClientAndProducer = du (IO) ( bind (K.closeProducer (producer))
-                                     , bind (K.closeClient   (client)) ),
+
+  //closeClientAndProducer :: Task {}
+    closeClientAndProducer = du (T) ( bind (K.closeProducer (producer))
+                                    , bind (K.closeClient   (client)) ),
 
   //createTopicsT :: Task {}
     createTopicsT = du (T) ( bind (K.producerOnReady (producer, 10000))
                            , bind (K.createTopics    (producer, ['test', 'blah']))
                            , bind (K.send            (producer, payload))
-                           , bind (taskLiftIO        (closeClientAndProducer)) );
+                           , bind (closeClientAndProducer) );
 
     return runTask (logI, id, createTopicsT);
-  }(process.argv[2]),
+  }(),
 
   nil = null;
 (function runIO (args) {

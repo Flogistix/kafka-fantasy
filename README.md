@@ -1,38 +1,39 @@
 #Data
-data ProducerRequest = ProducerRequest { topic :: String
-                                       , messages :: [String]
-                                       , partition :: Int
-                                       , attributes :: 2 }
+    data ProducerRequest = ProducerRequest { topic :: String
+                                           , messages :: [String]
+                                           , partition :: Int
+                                           , attributes :: 2 }
 
-data FetchRequest = FetchRequest { topic :: String, offset :: Int }
+    data FetchRequest = FetchRequest { topic :: String, offset :: Int }
 
-data ConsumerOptions = ConsumerOptions { groupId :: String
-                                       , autoCommit :: Boolean
-                                       , autoCommitIntervalMs :: Int
-                                       , fetchMaxWaitMs :: Int
-                                       , fetchMinBytes :: Int
-                                       , fromOffset :: Boolean
-                                       , encoding :: String }
+    data ConsumerOptions = ConsumerOptions { groupId :: String
+                                           , autoCommit :: Boolean
+                                           , autoCommitIntervalMs :: Int
+                                           , fetchMaxWaitMs :: Int
+                                           , fetchMinBytes :: Int
+                                           , fromOffset :: Boolean
+                                           , encoding :: String }
 
 #Functions
-mkClient :: String -> String -> Client
 
-closeClient :: Producer -> IO Unit
+    mkClient :: String -> String -> Client
 
-mkProducer :: Client -> Producer
+    closeClient :: Producer -> Task Unit
 
-producerOnReady :: Producer -> Int -> Task Unit
+    mkProducer :: Client -> Producer
 
-createTopics :: Producer -> [String] -> Task Unit
+    producerOnReady :: Producer -> Int -> Task Unit
 
-closeProducer :: Producer -> IO Unit
+    createTopics :: Producer -> [String] -> Task Unit
 
-mkProducerRequest :: Topic -> Int -> [String] -> Payload
+    closeProducer :: Producer -> Task Unit
 
-send :: Producer -> [ProducerRequest] -> Task {}
+    mkProducerRequest :: Topic -> Int -> [String] -> Payload
 
-mkConsumer :: Client -> [FetchRequest] -> ConsumerOptions -> Consumer
+    send :: Producer -> [ProducerRequest] -> Task {}
 
-mkFetchRequest :: String -> Int -> FetchRequest
+    mkConsumer :: Client -> [FetchRequest] -> ConsumerOptions -> Consumer
 
-mkStreamFromTopic :: Consumer -> String -> EventStream
+    mkFetchRequest :: String -> Int -> FetchRequest
+
+    mkStreamFromTopic :: Consumer -> String -> EventStream
